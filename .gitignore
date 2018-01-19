@@ -1,10 +1,5 @@
-# Created by .ignore support plugin (hsz.mobi)
-### VisualStudioCode template
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# VisualStudioCode stuff
+.vscode/
 
 # IntelliJ stuff
 *.iml
