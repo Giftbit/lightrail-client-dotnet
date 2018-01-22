@@ -13,7 +13,6 @@ namespace Lightrail.Model
         public string ContactId { get; set;}
         public DateTime DateCreated { get; set;}
         public Dictionary<string, string> Categories { get; set; }
-
     }
 
     public enum CardType
