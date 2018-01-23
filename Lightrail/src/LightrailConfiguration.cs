@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Lightrail
 {
 
@@ -7,10 +10,9 @@ namespace Lightrail
 
         public static string SharedSecret { get; set; }
 
-        public static string RestRoot { get; set; } = "https://api.lightrail.com/";
+        public static string RestRoot { get; set; } = "https://api.lightrail.com";
 
-        // TODO figure out correct typing here
-        //public static object AdditionalHeaders { get; set; }
+        public static List<KeyValuePair<string, string>> AdditionalHeaders { get; set; }
 
     }
 }

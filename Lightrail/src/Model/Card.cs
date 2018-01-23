@@ -12,7 +12,14 @@ namespace Lightrail.Model
         public string Currency { get; set;}
         public string ContactId { get; set;}
         public DateTime DateCreated { get; set;}
-        public Dictionary<string, string> Categories { get; set; }
+        public List<CardCategory> Categories { get; set; }
+    }
+
+    public class CardCategory
+    {
+        public string CategoryId { get; set;}
+        public string Key { get; set;}
+        public string Value { get; set;}
     }
 
     public enum CardType

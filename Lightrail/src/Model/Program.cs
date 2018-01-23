@@ -12,11 +12,11 @@ namespace Lightrail.Model
         public bool Active { get; set; }
         public string Currency { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime ProgramExpiresDate { get; set; }
-        public DateTime ProgramStartDate { get; set; }
-        public Int64 CodeActivePeriodInDays { get; set; }
-        public Int64 CodeValueMin { get; set; }
-        public Int64 CodeValueMax { get; set; }
+        public DateTime? ProgramExpiresDate { get; set; }
+        public DateTime? ProgramStartDate { get; set; }
+        public Int64? CodeActivePeriodInDays { get; set; }
+        public Int64? CodeValueMin { get; set; }
+        public Int64? CodeValueMax { get; set; }
         public List<Int64> FixedCodeValues { get; set; }
         public CodeEngine CodeEngine { get; set; }
         public CodeConfig CodeConfig { get; set; }

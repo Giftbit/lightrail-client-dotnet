@@ -8,7 +8,7 @@ namespace Lightrail.Model
     {
         public string Currency { get; set;}
         public CardType CardType { get; set; }
-        public DateTime AsAtDate { get; set; }
+        public DateTime? AsAtDate { get; set; }
         public string CardId { get; set; }
         public List<ValueStoreDetails> ValueStores { get; set; }
     }
@@ -18,7 +18,7 @@ namespace Lightrail.Model
         public ValueStoreType ValueStoreType { get; set; }
         public Int64 Value { get; set; }
         public BalanceState State { get; set; }
-        public DateTime Expires { get; set; }
+        public DateTime? Expires { get; set; }
         public DateTime StartDate { get; set; }
         public string ProgramId { get; set; }
         public string ValueStoreId { get; set; }

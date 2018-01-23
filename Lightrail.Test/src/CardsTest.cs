@@ -12,7 +12,7 @@ namespace Lightrail.Test
     [TestClass]
     public class CardsTest
     {
-        [TestInitialize()]
+        [TestInitialize]
         public void Before()
         {
             DotNetEnv.Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", ".env"));
@@ -20,7 +20,7 @@ namespace Lightrail.Test
         }
 
         [TestMethod]
-        public async Task TestCreateGiftCardCard()
+        public async Task TestCreateGiftCard()
         {
             var userSuppliedId = Guid.NewGuid().ToString();
 

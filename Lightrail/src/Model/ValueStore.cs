@@ -12,8 +12,8 @@ namespace Lightrail.Model
         public string Currency { get; set; }
         public DateTime DateCreated { get; set; }
         public string ProgramId { get; set; }
-        public DateTime Expires { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? Expires { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 
     public enum ValueStoreType
