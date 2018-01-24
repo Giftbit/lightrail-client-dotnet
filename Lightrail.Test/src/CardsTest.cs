@@ -1,5 +1,6 @@
 using Lightrail;
 using Lightrail.Model;
+using Lightrail.Net.Exceptions;
 using Lightrail.Params;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,11 +13,16 @@ namespace Lightrail.Test
     [TestClass]
     public class CardsTest
     {
+        private LightrailClient _lightrail;
+
         [TestInitialize]
         public void Before()
         {
             DotNetEnv.Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", ".env"));
-            LightrailConfiguration.ApiKey = Environment.GetEnvironmentVariable("LIGHTRAIL_API_KEY");
+            _lightrail = new LightrailClient
+            {
+                ApiKey = Environment.GetEnvironmentVariable("LIGHTRAIL_API_KEY")
+            };
         }
 
         [TestMethod]
@@ -24,18 +30,58 @@ namespace Lightrail.Test
         {
             var userSuppliedId = Guid.NewGuid().ToString();
 
-            var card = await Lightrail.Cards.CreateCard(new CreateCardParams
+            var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
                 UserSuppliedId = userSuppliedId,
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
                 InitialValue = 6565
             });
-
             Assert.IsNotNull(card);
+            Assert.IsNotNull(card.CardId);
             Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
             Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
             Assert.AreEqual(card.Currency, "USD");
+        }
+
+        [TestMethod]
+        public async Task TestGetGiftCard()
+        {
+            var userSuppliedId = Guid.NewGuid().ToString();
+
+            var card = await _lightrail.Cards.CreateCard(new CreateCardParams
+            {
+                UserSuppliedId = userSuppliedId,
+                CardType = CardType.GIFT_CARD,
+                Currency = "USD",
+                InitialValue = 7676
+            });
+            Assert.IsNotNull(card);
+            Assert.IsNotNull(card.CardId);
+            Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
+            Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
+            Assert.AreEqual(card.Currency, "USD");
+
+            var sameCard = await _lightrail.Cards.GetCardById(card.CardId);
+            Assert.IsNotNull(sameCard);
+            Assert.AreEqual(sameCard.UserSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(sameCard.CardType, card.CardType);
+            Assert.AreEqual(sameCard.Currency, card.Currency);
+        }
+
+        [TestMethod]
+        public async Task TestGetGiftCardWithMaliciousPath()
+        {
+            var exceptionThrown = true;
+            try
+            {
+                await _lightrail.Cards.GetCardById("../..");
+            }
+            catch (LightrailRequestException e)
+            {
+                Assert.AreEqual(e.RequestUri, new Uri(_lightrail.RestRoot, "/v1/cards/..%2F.."));
+            }
+            Assert.IsTrue(exceptionThrown, "throws a LightrailRequestException exception");
         }
     }
 }

@@ -10,19 +10,22 @@ using System.Text;
 namespace Lightrail.Test
 {
     [TestClass]
-    public class ShopperTokenFactoryTest
+    public class LightrailClientTest
     {
         [TestMethod]
         public void TestGenerateShopperTokenForContactId()
         {
-            LightrailConfiguration.ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
-            LightrailConfiguration.SharedSecret = "secret";
+            var lightrail = new LightrailClient
+            {
+                ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                SharedSecret = "secret"
+            };
 
-            var shopperToken = Lightrail.ShopperTokenFactory.GenerateShopperToken(new ContactIdentifier { ContactId = "chauntaktEyeDee" }, 600);
+            var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { ContactId = "chauntaktEyeDee" }, 600);
             Assert.IsNotNull(shopperToken);
             Assert.AreEqual(shopperToken.Split(".").Length, 3);
 
-            JwtSecurityToken jwt = ReadToken(shopperToken);
+            JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual(jwt.Header.Alg, "HS256");
             Assert.AreEqual(jwt.Header["ver"], (Int64)3);
             Assert.AreEqual(jwt.Header["vav"], (Int64)1);
@@ -37,14 +40,17 @@ namespace Lightrail.Test
         [TestMethod]
         public void TestGenerateShopperTokenForShopperId()
         {
-            LightrailConfiguration.ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
-            LightrailConfiguration.SharedSecret = "secret";
+            var lightrail = new LightrailClient
+            {
+                ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                SharedSecret = "secret"
+            };
 
-            var shopperToken = Lightrail.ShopperTokenFactory.GenerateShopperToken(new ContactIdentifier { ShopperId = "zhopherId" }, 600);
+            var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { ShopperId = "zhopherId" }, 600);
             Assert.IsNotNull(shopperToken);
             Assert.AreEqual(shopperToken.Split(".").Length, 3);
 
-            JwtSecurityToken jwt = ReadToken(shopperToken);
+            JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual(jwt.Header.Alg, "HS256");
             Assert.AreEqual(jwt.Header["ver"], (Int64)3);
             Assert.AreEqual(jwt.Header["vav"], (Int64)1);
@@ -59,14 +65,17 @@ namespace Lightrail.Test
         [TestMethod]
         public void TestGenerateShopperTokenForUserSuppliedId()
         {
-            LightrailConfiguration.ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8";
-            LightrailConfiguration.SharedSecret = "secret";
+            var lightrail = new LightrailClient
+            {
+                ApiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJnIjp7Imd1aSI6Imdvb2V5IiwiZ21pIjoiZ2VybWllIn19.XxOjDsluAw5_hdf5scrLk0UBn8VlhT-3zf5ZeIkEld8",
+                SharedSecret = "secret"
+            };
 
-            var shopperToken = Lightrail.ShopperTokenFactory.GenerateShopperToken(new ContactIdentifier { UserSuppliedId = "luserSuppliedId" }, 600);
+            var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { UserSuppliedId = "luserSuppliedId" }, 600);
             Assert.IsNotNull(shopperToken);
             Assert.AreEqual(shopperToken.Split(".").Length, 3);
 
-            JwtSecurityToken jwt = ReadToken(shopperToken);
+            JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual(jwt.Header.Alg, "HS256");
             Assert.AreEqual(jwt.Header["ver"], (Int64)3);
             Assert.AreEqual(jwt.Header["vav"], (Int64)1);
@@ -78,9 +87,9 @@ namespace Lightrail.Test
             Assert.IsNotNull(jwt.Payload.Exp);
         }
 
-        private JwtSecurityToken ReadToken(string shopperToken)
+        private JwtSecurityToken ReadToken(string shopperToken, string sharedSecret)
         {
-            var keyBytes = Encoding.Default.GetBytes(LightrailConfiguration.SharedSecret);
+            var keyBytes = Encoding.Default.GetBytes(sharedSecret);
             if (keyBytes.Length < 64)
             {
                 Array.Resize(ref keyBytes, 64);
