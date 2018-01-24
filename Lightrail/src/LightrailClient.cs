@@ -23,12 +23,7 @@ namespace Lightrail
         public string ApiKey { get; set; }
         public string SharedSecret { get; set; }
         public Uri RestRoot { get; set; } = new Uri("https://api.lightrail.com");
-
-        public IList<KeyValuePair<string, string>> AdditionalHeaders
-        {
-            get { return _additionalHeaders; }
-        }
-
+        public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
 
         internal LightrailRequest Request(string method, string path)

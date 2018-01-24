@@ -19,32 +19,9 @@ namespace Lightrail.Net
         public Uri RequestUri { get; set; }
         public HttpMethod Method { get; set; }
 
-        public bool IsSuccess
-        {
-            get { return (int)StatusCode >= 200 && (int)StatusCode <= 299; }
-        }
-
-        public JObject BodyJson {
-            get
-            {
-                if (_bodyJson == null)
-                {
-                    _bodyJson = JObject.Parse(BodyText);
-                }
-                return _bodyJson;
-            }
-        }
-
-        public T Body {
-            get
-            {
-                if (_body == null)
-                {
-                    _body = BodyJson.ToObject<T>();
-                }
-                return _body;
-            }
-        }
+        public bool IsSuccess => (int)StatusCode >= 200 && (int)StatusCode <= 299;
+        public JObject BodyJson => _bodyJson != null ? _bodyJson : _bodyJson = JObject.Parse(BodyText);
+        public T Body => _body != null ? _body : _body = BodyJson.ToObject<T>();
 
         public void EnsureSuccess()
         {
