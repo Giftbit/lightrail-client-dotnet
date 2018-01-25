@@ -59,6 +59,31 @@ namespace Lightrail.Test
         }
 
         [TestMethod]
+        public async Task TestCreateAndActivateGiftCard()
+        {
+            var userSuppliedId = Guid.NewGuid().ToString();
+
+            var card = await _lightrail.Cards.CreateCard(new CreateCardParams
+            {
+                UserSuppliedId = userSuppliedId,
+                CardType = CardType.GIFT_CARD,
+                Currency = "USD",
+                InitialValue = 7272,
+                Inactive = true
+            });
+            Assert.IsNotNull(card);
+            Assert.IsNotNull(card.CardId);
+            Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
+            Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
+            Assert.AreEqual(card.Currency, "USD");
+
+            var transaction = await _lightrail.Cards.ActivateCard(card, Guid.NewGuid().ToString());
+            Assert.IsNotNull(transaction);
+            Assert.AreEqual(transaction.CardId, card.CardId);
+            Assert.AreEqual(transaction.Currency, card.Currency);
+        }
+
+        [TestMethod]
         public async Task TestGetGiftCardWithMaliciousPath()
         {
             var exceptionThrown = true;

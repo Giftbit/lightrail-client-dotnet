@@ -19,12 +19,14 @@ namespace Lightrail
         private HttpClient _httpClient = new HttpClient();
         private string _userAgent = $"Lightrail-Dotnet/{Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
         private Cards _cards;
+        private Contacts _contacts;
 
         public string ApiKey { get; set; }
         public string SharedSecret { get; set; }
         public Uri RestRoot { get; set; } = new Uri("https://api.lightrail.com");
         public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
+        public Contacts Contacts => _contacts != null ? _contacts : _contacts = new Contacts(this);
 
         public LightrailRequest Request(string method, string path)
         {

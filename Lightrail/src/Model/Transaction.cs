@@ -6,17 +6,17 @@ namespace Lightrail.Model
 {
     public class Transaction
     {
-        public string TransactionId { get; set;}
-        public Int64 Value { get; set;}
-        public string UserSuppliedId { get; set;}
-        public DateTime DateCreated { get; set;}
-        public TransactionType TransactionType { get; set;}
-        public TransactionAccessMethod TransactionAccessMethod { get; set;}
-        public string ParentTransactionId { get; set;}
-        public string CardId { get; set;}
-        public string Currency { get; set;}
-        public List<TransactionBreakdown> TransactionBreakdown { get; set;}
-        public Dictionary<string, object> Metadata { get; set;}
+        public string TransactionId { get; set; }
+        public Int64 Value { get; set; }
+        public string UserSuppliedId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public TransactionType TransactionType { get; set; }
+        public TransactionAccessMethod TransactionAccessMethod { get; set; }
+        public string ParentTransactionId { get; set; }
+        public string CardId { get; set; }
+        public string Currency { get; set; }
+        public List<TransactionBreakdown> TransactionBreakdown { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
     }
 
     public enum TransactionType

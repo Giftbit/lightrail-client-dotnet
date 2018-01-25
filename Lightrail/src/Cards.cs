@@ -22,10 +22,7 @@ namespace Lightrail
             {
                 throw new ArgumentNullException(nameof(parms));
             }
-            if (parms.UserSuppliedId == null)
-            {
-                throw new ArgumentNullException(nameof(parms.UserSuppliedId));
-            }
+            parms.EnsureUserSuppliedId();
 
             var response = await _lightrail.Request("POST", "v1/cards")
                 .AddBody(parms)
@@ -75,6 +72,64 @@ namespace Lightrail
                 return resp.Cards[0];
             }
             return null;
+        }
+
+        public async Task<Card> CancelCard(string cardId, string userSuppliedId)
+        {
+            if (cardId == null)
+            {
+                throw new ArgumentNullException(nameof(cardId));
+            }
+            if (userSuppliedId == null)
+            {
+                throw new ArgumentNullException(nameof(userSuppliedId));
+            }
+
+            var response = await _lightrail.Request("POST", "v1/cards/{cardId}/cancel")
+                .SetPathParameter("cardId", cardId)
+                .AddBody(new {UserSuppliedId = userSuppliedId})
+                .Execute<Dictionary<string, Card>>();
+            response.EnsureSuccess();
+            return response.Body["card"];
+        }
+
+        public Task<Card> CancelCard(Card card, string userSuppliedId)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card));
+            }
+
+            return CancelCard(card.CardId, userSuppliedId);
+        }
+
+        public async Task<Transaction> ActivateCard(string cardId, string userSuppliedId)
+        {
+            if (cardId == null)
+            {
+                throw new ArgumentNullException(nameof(cardId));
+            }
+            if (userSuppliedId == null)
+            {
+                throw new ArgumentNullException(nameof(userSuppliedId));
+            }
+
+            var response = await _lightrail.Request("POST", "v1/cards/{cardId}/activate")
+                .SetPathParameter("cardId", cardId)
+                .AddBody(new {UserSuppliedId = userSuppliedId})
+                .Execute<Dictionary<string, Transaction>>();
+            response.EnsureSuccess();
+            return response.Body["transaction"];
+        }
+
+        public Task<Transaction> ActivateCard(Card card, string userSuppliedId)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card));
+            }
+
+            return ActivateCard(card.CardId, userSuppliedId);
         }
     }
 }

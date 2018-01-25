@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Lightrail.Params
 {
-    public class CreateCardParams
+    public class CreateCardParams : IUserSuppliedIdRequired
     {
         public string UserSuppliedId { get; set; }
         public CardType CardType { get; set; }
