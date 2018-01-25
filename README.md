@@ -7,5 +7,8 @@ A .NET client for Lightrail
 - [.NET Core SDK](https://dotnet.github.io/)
 - [Visual Studio Code](https://code.visualstudio.com/) (or some other editor)
 
+### Compiling
+`dotnet build`
+
 ### Testing
 `dotnet test`

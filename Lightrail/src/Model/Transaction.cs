@@ -9,9 +9,9 @@ namespace Lightrail.Model
         public string TransactionId { get; set; }
         public Int64 Value { get; set; }
         public string UserSuppliedId { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }
         public TransactionType TransactionType { get; set; }
-        public TransactionAccessMethod TransactionAccessMethod { get; set; }
+        public TransactionAccessMethod? TransactionAccessMethod { get; set; }
         public string ParentTransactionId { get; set; }
         public string CardId { get; set; }
         public string Currency { get; set; }

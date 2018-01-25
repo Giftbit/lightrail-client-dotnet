@@ -10,11 +10,14 @@ namespace Lightrail
     public class Cards
     {
         private LightrailClient _lightrail;
+        private CardTransactions _cardTransactions;
 
         internal Cards(LightrailClient lightrail)
         {
             _lightrail = lightrail;
         }
+
+        public CardTransactions Transactions => _cardTransactions != null ? _cardTransactions : _cardTransactions = new CardTransactions(_lightrail);
 
         public async Task<Card> CreateCard(CreateCardParams parms)
         {
