@@ -26,7 +26,7 @@ namespace Lightrail.Test
         }
 
         [TestMethod]
-        public async Task TestCreateGiftCard()
+        public async Task TestCreateAndGetGiftCard()
         {
             var userSuppliedId = Guid.NewGuid().ToString();
 
@@ -42,31 +42,20 @@ namespace Lightrail.Test
             Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
             Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
             Assert.AreEqual(card.Currency, "USD");
-        }
 
-        [TestMethod]
-        public async Task TestGetGiftCard()
-        {
-            var userSuppliedId = Guid.NewGuid().ToString();
+            var cardById = await _lightrail.Cards.GetCardById(card.CardId);
+            Assert.IsNotNull(cardById);
+            Assert.AreEqual(cardById.CardId, card.CardId);
+            Assert.AreEqual(cardById.UserSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(cardById.CardType, card.CardType);
+            Assert.AreEqual(cardById.Currency, card.Currency);
 
-            var card = await _lightrail.Cards.CreateCard(new CreateCardParams
-            {
-                UserSuppliedId = userSuppliedId,
-                CardType = CardType.GIFT_CARD,
-                Currency = "USD",
-                InitialValue = 7676
-            });
-            Assert.IsNotNull(card);
-            Assert.IsNotNull(card.CardId);
-            Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
-            Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
-            Assert.AreEqual(card.Currency, "USD");
-
-            var sameCard = await _lightrail.Cards.GetCardById(card.CardId);
-            Assert.IsNotNull(sameCard);
-            Assert.AreEqual(sameCard.UserSuppliedId, card.UserSuppliedId);
-            Assert.AreEqual(sameCard.CardType, card.CardType);
-            Assert.AreEqual(sameCard.Currency, card.Currency);
+            var cardByUserSuppliedId = await _lightrail.Cards.GetCardByUserSuppliedId(userSuppliedId);
+            Assert.IsNotNull(cardByUserSuppliedId);
+            Assert.AreEqual(cardByUserSuppliedId.CardId, card.CardId);
+            Assert.AreEqual(cardByUserSuppliedId.UserSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(cardByUserSuppliedId.CardType, card.CardType);
+            Assert.AreEqual(cardByUserSuppliedId.Currency, card.Currency);
         }
 
         [TestMethod]

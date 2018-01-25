@@ -8,9 +8,8 @@ using System.Net.Http;
 
 namespace Lightrail.Net
 {
-    internal class LightrailResponse<T>
+    public class LightrailResponse<T>
     {
-
         private JObject _bodyJson;
         private T _body;
 

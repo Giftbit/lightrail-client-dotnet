@@ -26,12 +26,12 @@ namespace Lightrail
         public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
 
-        internal LightrailRequest Request(string method, string path)
+        public LightrailRequest Request(string method, string path)
         {
             return Request(new HttpMethod(method), path);
         }
 
-        internal LightrailRequest Request(HttpMethod method, string path)
+        public LightrailRequest Request(HttpMethod method, string path)
         {
             Uri requestUri = new Uri(RestRoot, path);
 

@@ -34,6 +34,20 @@ namespace Lightrail
             return response.Body["card"];
         }
 
+        public async Task<PaginatedCards> GetCards(GetCardsParams parms)
+        {
+            if (parms == null)
+            {
+                throw new ArgumentNullException(nameof(parms));
+            }
+
+            var response = await _lightrail.Request("GET", "v1/cards")
+                .AddQueryParameters(parms)
+                .Execute<PaginatedCards>();
+            response.EnsureSuccess();
+            return response.Body;
+        }
+
         public async Task<Card> GetCardById(string cardId)
         {
             if (cardId == null)
@@ -46,6 +60,21 @@ namespace Lightrail
                 .Execute<Dictionary<string, Card>>();
             response.EnsureSuccess();
             return response.Body["card"];
+        }
+
+        public async Task<Card> GetCardByUserSuppliedId(string userSuppliedId)
+        {
+            if (userSuppliedId == null)
+            {
+                throw new ArgumentNullException(nameof(userSuppliedId));
+            }
+
+            var resp = await GetCards(new GetCardsParams { UserSuppliedId = userSuppliedId });
+            if (resp.Cards.Count > 0)
+            {
+                return resp.Cards[0];
+            }
+            return null;
         }
     }
 }
