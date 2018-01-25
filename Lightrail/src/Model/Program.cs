@@ -17,11 +17,11 @@ namespace Lightrail.Model
         public Int64? CodeActivePeriodInDays { get; set; }
         public Int64? CodeValueMin { get; set; }
         public Int64? CodeValueMax { get; set; }
-        public List<Int64> FixedCodeValues { get; set; }
+        public IList<Int64> FixedCodeValues { get; set; }
         public CodeEngine CodeEngine { get; set; }
         public CodeConfig CodeConfig { get; set; }
         public ValueStoreType ValueStoreType { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public IDictionary<string, object> Metadata { get; set; }
         public string TimeZone { get; set; }
         public CardType CardType { get; set; }
     }

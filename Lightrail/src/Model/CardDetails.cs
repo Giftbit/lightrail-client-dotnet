@@ -10,7 +10,7 @@ namespace Lightrail.Model
         public CardType CardType { get; set; }
         public DateTime? AsAtDate { get; set; }
         public string CardId { get; set; }
-        public List<ValueStoreDetails> ValueStores { get; set; }
+        public IList<ValueStoreDetails> ValueStores { get; set; }
     }
 
     public class ValueStoreDetails
@@ -19,10 +19,10 @@ namespace Lightrail.Model
         public Int64 Value { get; set; }
         public BalanceState State { get; set; }
         public DateTime? Expires { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         public string ProgramId { get; set; }
         public string ValueStoreId { get; set; }
-        public List<string> Restrictions { get; set; }
+        public IList<string> Restrictions { get; set; }
     }
 
     public enum BalanceState

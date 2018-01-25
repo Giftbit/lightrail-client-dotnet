@@ -55,6 +55,10 @@ namespace Lightrail
             var response = await _lightrail.Request("GET", "v1/cards/{cardId}")
                 .SetPathParameter("cardId", cardId)
                 .Execute<Dictionary<string, Card>>();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }
             response.EnsureSuccess();
             return response.Body["card"];
         }
@@ -72,6 +76,62 @@ namespace Lightrail
                 return resp.Cards[0];
             }
             return null;
+        }
+
+        public async Task<Fullcode> GetFullcode(string cardId)
+        {
+            if (cardId == null)
+            {
+                throw new ArgumentNullException(nameof(cardId));
+            }
+
+            var response = await _lightrail.Request("GET", "v1/cards/{cardId}/fullcode")
+                .SetPathParameter("cardId", cardId)
+                .Execute<Dictionary<string, Fullcode>>();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            response.EnsureSuccess();
+            return response.Body["fullcode"];
+        }
+
+        public Task<Fullcode> GetFullcode(Card card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card));
+            }
+
+            return GetFullcode(card.CardId);
+        }
+
+        public async Task<CardDetails> GetDetails(string cardId)
+        {
+            if (cardId == null)
+            {
+                throw new ArgumentNullException(nameof(cardId));
+            }
+
+            var response = await _lightrail.Request("GET", "v1/cards/{cardId}/details")
+                .SetPathParameter("cardId", cardId)
+                .Execute<Dictionary<string, CardDetails>>();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }
+            response.EnsureSuccess();
+            return response.Body["details"];
+        }
+
+        public Task<CardDetails> GetDetails(Card card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card));
+            }
+
+            return GetDetails(card.CardId);
         }
 
         public async Task<Card> CancelCard(string cardId, string userSuppliedId)

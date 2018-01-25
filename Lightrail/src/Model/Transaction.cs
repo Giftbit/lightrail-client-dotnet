@@ -15,8 +15,8 @@ namespace Lightrail.Model
         public string ParentTransactionId { get; set; }
         public string CardId { get; set; }
         public string Currency { get; set; }
-        public List<TransactionBreakdown> TransactionBreakdown { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public IList<TransactionBreakdown> TransactionBreakdown { get; set; }
+        public IDictionary<string, object> Metadata { get; set; }
     }
 
     public enum TransactionType

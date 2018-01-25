@@ -56,6 +56,17 @@ namespace Lightrail.Test
             Assert.AreEqual(cardByUserSuppliedId.UserSuppliedId, card.UserSuppliedId);
             Assert.AreEqual(cardByUserSuppliedId.CardType, card.CardType);
             Assert.AreEqual(cardByUserSuppliedId.Currency, card.Currency);
+
+            var fullcode = await _lightrail.Cards.GetFullcode(card);
+            Assert.IsNotNull(fullcode);
+            Assert.IsNotNull(fullcode.Code);
+
+            var details = await _lightrail.Cards.GetDetails(card);
+            Assert.IsNotNull(details);
+            Assert.AreEqual(details.CardId, card.CardId);
+            Assert.AreEqual(details.CardType, card.CardType);
+            Assert.AreEqual(details.ValueStores.Count, 1);
+            Assert.AreEqual(details.ValueStores[0].Value, 6565);
         }
 
         [TestMethod]
@@ -81,6 +92,13 @@ namespace Lightrail.Test
             Assert.IsNotNull(transaction);
             Assert.AreEqual(transaction.CardId, card.CardId);
             Assert.AreEqual(transaction.Currency, card.Currency);
+        }
+
+        [TestMethod]
+        public async Task TestGetGiftCardNotFound()
+        {
+            var card = await _lightrail.Cards.GetCardById(Guid.NewGuid().ToString());
+            Assert.IsNull(card);
         }
 
         [TestMethod]

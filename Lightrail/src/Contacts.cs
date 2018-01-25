@@ -63,6 +63,10 @@ namespace Lightrail
             var response = await _lightrail.Request("GET", "v1/contacts/{contactId}")
                 .SetPathParameter("contactId", contactId)
                 .Execute<Dictionary<string, Contact>>();
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return null;
+            }
             response.EnsureSuccess();
             return response.Body["contact"];
         }

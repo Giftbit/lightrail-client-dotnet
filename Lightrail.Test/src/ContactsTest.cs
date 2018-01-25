@@ -69,5 +69,12 @@ namespace Lightrail.Test
             Assert.AreEqual(contactByUserSuppliedId.FirstName, updatedContact.FirstName);
             Assert.AreEqual(contactByUserSuppliedId.LastName, updatedContact.LastName);
         }
+
+        [TestMethod]
+        public async Task TestGetContactNotFound()
+        {
+            var contact = await _lightrail.Contacts.GetContactById(Guid.NewGuid().ToString());
+            Assert.IsNull(contact);
+        }
     }
 }

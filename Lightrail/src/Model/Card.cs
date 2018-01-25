@@ -12,7 +12,7 @@ namespace Lightrail.Model
         public string Currency { get; set;}
         public string ContactId { get; set;}
         public DateTime DateCreated { get; set;}
-        public List<CardCategory> Categories { get; set; }
+        public IList<CardCategory> Categories { get; set; }
     }
 
     public class CardCategory

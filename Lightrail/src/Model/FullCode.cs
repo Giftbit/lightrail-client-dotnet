@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Lightrail.Model
 {
-    public class FullCode
+    public class Fullcode
     {
         public string Code { get; set; }
     }
