@@ -39,23 +39,23 @@ namespace Lightrail.Test
             });
             Assert.IsNotNull(card);
             Assert.IsNotNull(card.CardId);
-            Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
-            Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
-            Assert.AreEqual(card.Currency, "USD");
+            Assert.AreEqual(userSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(CardType.GIFT_CARD, card.CardType);
+            Assert.AreEqual("USD", card.Currency);
 
             var cardById = await _lightrail.Cards.GetCardById(card.CardId);
             Assert.IsNotNull(cardById);
-            Assert.AreEqual(cardById.CardId, card.CardId);
-            Assert.AreEqual(cardById.UserSuppliedId, card.UserSuppliedId);
-            Assert.AreEqual(cardById.CardType, card.CardType);
-            Assert.AreEqual(cardById.Currency, card.Currency);
+            Assert.AreEqual(card.CardId, cardById.CardId);
+            Assert.AreEqual(card.UserSuppliedId, cardById.UserSuppliedId);
+            Assert.AreEqual(card.CardType, cardById.CardType);
+            Assert.AreEqual(card.Currency, cardById.Currency);
 
             var cardByUserSuppliedId = await _lightrail.Cards.GetCardByUserSuppliedId(userSuppliedId);
             Assert.IsNotNull(cardByUserSuppliedId);
-            Assert.AreEqual(cardByUserSuppliedId.CardId, card.CardId);
-            Assert.AreEqual(cardByUserSuppliedId.UserSuppliedId, card.UserSuppliedId);
-            Assert.AreEqual(cardByUserSuppliedId.CardType, card.CardType);
-            Assert.AreEqual(cardByUserSuppliedId.Currency, card.Currency);
+            Assert.AreEqual(card.CardId, cardByUserSuppliedId.CardId);
+            Assert.AreEqual(card.UserSuppliedId, cardByUserSuppliedId.UserSuppliedId);
+            Assert.AreEqual(card.CardType, cardByUserSuppliedId.CardType);
+            Assert.AreEqual(card.Currency, cardByUserSuppliedId.Currency);
 
             var fullcode = await _lightrail.Cards.GetFullcode(card);
             Assert.IsNotNull(fullcode);
@@ -63,10 +63,10 @@ namespace Lightrail.Test
 
             var details = await _lightrail.Cards.GetDetails(card);
             Assert.IsNotNull(details);
-            Assert.AreEqual(details.CardId, card.CardId);
-            Assert.AreEqual(details.CardType, card.CardType);
-            Assert.AreEqual(details.ValueStores.Count, 1);
-            Assert.AreEqual(details.ValueStores[0].Value, 6565);
+            Assert.AreEqual(card.CardId, details.CardId);
+            Assert.AreEqual(card.CardType, details.CardType);
+            Assert.AreEqual(1, details.ValueStores.Count);
+            Assert.AreEqual(6565, details.ValueStores[0].Value);
         }
 
         [TestMethod]
@@ -84,14 +84,14 @@ namespace Lightrail.Test
             });
             Assert.IsNotNull(card);
             Assert.IsNotNull(card.CardId);
-            Assert.AreEqual(card.UserSuppliedId, userSuppliedId);
-            Assert.AreEqual(card.CardType, CardType.GIFT_CARD);
-            Assert.AreEqual(card.Currency, "USD");
+            Assert.AreEqual(userSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(CardType.GIFT_CARD, card.CardType);
+            Assert.AreEqual("USD", card.Currency);
 
             var transaction = await _lightrail.Cards.ActivateCard(card, Guid.NewGuid().ToString());
             Assert.IsNotNull(transaction);
-            Assert.AreEqual(transaction.CardId, card.CardId);
-            Assert.AreEqual(transaction.Currency, card.Currency);
+            Assert.AreEqual(card.CardId, transaction.CardId);
+            Assert.AreEqual(card.Currency, transaction.Currency);
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace Lightrail.Test
             }
             catch (LightrailRequestException e)
             {
-                Assert.AreEqual(e.RequestUri, new Uri(_lightrail.RestRoot, "/v1/cards/..%2F.."));
+                Assert.AreEqual(new Uri(_lightrail.RestRoot, "/v1/cards/..%2F.."), e.RequestUri);
             }
             Assert.IsTrue(exceptionThrown, "throws a LightrailRequestException exception");
         }

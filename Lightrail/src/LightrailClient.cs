@@ -1,4 +1,3 @@
-using Lightrail.Model;
 using Lightrail.Net;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
@@ -18,6 +17,7 @@ namespace Lightrail
         private IList<KeyValuePair<string, string>> _additionalHeaders = new List<KeyValuePair<string, string>>();
         private HttpClient _httpClient = new HttpClient();
         private string _userAgent = $"Lightrail-Dotnet/{Assembly.GetExecutingAssembly().GetName().Version.ToString()}";
+        private Accounts _accounts;
         private Cards _cards;
         private Contacts _contacts;
 
@@ -25,6 +25,8 @@ namespace Lightrail
         public string SharedSecret { get; set; }
         public Uri RestRoot { get; set; } = new Uri("https://api.lightrail.com");
         public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
+
+        public Accounts Accounts => _accounts != null ? _accounts : _accounts = new Accounts(this);
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
         public Contacts Contacts => _contacts != null ? _contacts : _contacts = new Contacts(this);
 
@@ -44,7 +46,7 @@ namespace Lightrail
                 .AddHeaders(_additionalHeaders);
         }
 
-        public string GenerateShopperToken(ContactIdentifier contact, int validityInSeconds = 43200)
+        public string GenerateShopperToken(Model.ContactIdentifier contact, int validityInSeconds = 43200)
         {
             if (ApiKey == null)
             {

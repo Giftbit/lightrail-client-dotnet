@@ -44,11 +44,11 @@ namespace Lightrail.Test
                 Nsf = false
             });
             Assert.IsNotNull(transaction);
-            Assert.AreEqual(transaction.CardId, card.CardId);
-            Assert.AreEqual(transaction.Value, -7474);
-            Assert.AreEqual(transaction.TransactionBreakdown.Count, 1);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].Value, -7474);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction, 0);
+            Assert.AreEqual(card.CardId, transaction.CardId);
+            Assert.AreEqual(-7474, transaction.Value);
+            Assert.AreEqual(1, transaction.TransactionBreakdown.Count);
+            Assert.AreEqual(-7474, transaction.TransactionBreakdown[0].Value);
+            Assert.AreEqual(0, transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
         }
 
         [TestMethod]
@@ -70,30 +70,30 @@ namespace Lightrail.Test
                 Pending = true
             });
             Assert.IsNotNull(transaction);
-            Assert.AreEqual(transaction.CardId, card.CardId);
-            Assert.AreEqual(transaction.Value, -3322);
-            Assert.AreEqual(transaction.TransactionType, TransactionType.PENDING_CREATE);
-            Assert.AreEqual(transaction.TransactionBreakdown.Count, 1);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].Value, -3322);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction, 119999);
+            Assert.AreEqual(card.CardId, transaction.CardId);
+            Assert.AreEqual(-3322, transaction.Value);
+            Assert.AreEqual(TransactionType.PENDING_CREATE, transaction.TransactionType);
+            Assert.AreEqual(1, transaction.TransactionBreakdown.Count);
+            Assert.AreEqual(-3322, transaction.TransactionBreakdown[0].Value);
+            Assert.AreEqual(119999, transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
 
             var captureTransaction = await _lightrail.Cards.Transactions.CapturePending(card, transaction, new CapturePendingTransactionParams { UserSuppliedId = Guid.NewGuid().ToString() });
             Assert.IsNotNull(captureTransaction);
-            Assert.AreEqual(captureTransaction.CardId, card.CardId);
-            Assert.AreEqual(captureTransaction.Value, -3322);
-            Assert.AreEqual(captureTransaction.TransactionType, TransactionType.DRAWDOWN);
-            Assert.AreEqual(captureTransaction.TransactionBreakdown.Count, 1);
-            Assert.AreEqual(captureTransaction.TransactionBreakdown[0].Value, -3322);
-            Assert.AreEqual(captureTransaction.TransactionBreakdown[0].ValueAvailableAfterTransaction, 119999);
+            Assert.AreEqual(card.CardId, captureTransaction.CardId);
+            Assert.AreEqual(-3322, captureTransaction.Value);
+            Assert.AreEqual(TransactionType.DRAWDOWN, captureTransaction.TransactionType);
+            Assert.AreEqual(1, captureTransaction.TransactionBreakdown.Count);
+            Assert.AreEqual(-3322, captureTransaction.TransactionBreakdown[0].Value);
+            Assert.AreEqual(119999, captureTransaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
 
             var transactionById = await _lightrail.Cards.Transactions.GetTransactionById(card.CardId, captureTransaction.TransactionId);
             Assert.IsNotNull(transactionById);
-            Assert.AreEqual(transactionById.CardId, captureTransaction.CardId);
-            Assert.AreEqual(transactionById.Value, captureTransaction.Value);
-            Assert.AreEqual(transactionById.TransactionType, captureTransaction.TransactionType);
-            Assert.AreEqual(transactionById.TransactionBreakdown.Count, captureTransaction.TransactionBreakdown.Count);
-            Assert.AreEqual(transactionById.TransactionBreakdown[0].Value, captureTransaction.TransactionBreakdown[0].Value);
-            Assert.AreEqual(transactionById.TransactionBreakdown[0].ValueAvailableAfterTransaction, captureTransaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
+            Assert.AreEqual(captureTransaction.CardId, transactionById.CardId);
+            Assert.AreEqual(captureTransaction.Value, transactionById.Value);
+            Assert.AreEqual(captureTransaction.TransactionType, transactionById.TransactionType);
+            Assert.AreEqual(captureTransaction.TransactionBreakdown.Count, transactionById.TransactionBreakdown.Count);
+            Assert.AreEqual(captureTransaction.TransactionBreakdown[0].Value, transactionById.TransactionBreakdown[0].Value);
+            Assert.AreEqual(captureTransaction.TransactionBreakdown[0].ValueAvailableAfterTransaction, transactionById.TransactionBreakdown[0].ValueAvailableAfterTransaction);
         }
 
         [TestMethod]
@@ -115,25 +115,25 @@ namespace Lightrail.Test
                 Pending = true
             });
             Assert.IsNotNull(transaction);
-            Assert.AreEqual(transaction.CardId, card.CardId);
-            Assert.AreEqual(transaction.Value, -3322);
-            Assert.AreEqual(transaction.TransactionType, TransactionType.PENDING_CREATE);
-            Assert.AreEqual(transaction.TransactionBreakdown.Count, 1);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].Value, -3322);
-            Assert.AreEqual(transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction, 119999);
+            Assert.AreEqual(card.CardId, transaction.CardId);
+            Assert.AreEqual(-3322, transaction.Value);
+            Assert.AreEqual(TransactionType.PENDING_CREATE, transaction.TransactionType);
+            Assert.AreEqual(1, transaction.TransactionBreakdown.Count);
+            Assert.AreEqual(-3322, transaction.TransactionBreakdown[0].Value);
+            Assert.AreEqual(119999, transaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
 
             var voidUserSuppliedId = Guid.NewGuid().ToString();
             var voidTransaction = await _lightrail.Cards.Transactions.VoidPending(card, transaction, new VoidPendingTransactionParams { UserSuppliedId = voidUserSuppliedId });
             Assert.IsNotNull(voidTransaction);
-            Assert.AreEqual(voidTransaction.CardId, card.CardId);
-            Assert.AreEqual(voidTransaction.TransactionType, TransactionType.PENDING_VOID);
+            Assert.AreEqual(card.CardId, voidTransaction.CardId);
+            Assert.AreEqual(TransactionType.PENDING_VOID, voidTransaction.TransactionType);
 
             var transactionByUserSuppliedId = await _lightrail.Cards.Transactions.GetTransactionByUserSuppliedId(card, voidUserSuppliedId);
             Assert.IsNotNull(transactionByUserSuppliedId);
-            Assert.AreEqual(transactionByUserSuppliedId.CardId, voidTransaction.CardId);
-            Assert.AreEqual(transactionByUserSuppliedId.Value, voidTransaction.Value);
-            Assert.AreEqual(transactionByUserSuppliedId.TransactionType, voidTransaction.TransactionType);
-            Assert.AreEqual(transactionByUserSuppliedId.TransactionBreakdown.Count, voidTransaction.TransactionBreakdown.Count);
+            Assert.AreEqual(voidTransaction.CardId, transactionByUserSuppliedId.CardId);
+            Assert.AreEqual(voidTransaction.Value, transactionByUserSuppliedId.Value);
+            Assert.AreEqual(voidTransaction.TransactionType, transactionByUserSuppliedId.TransactionType);
+            Assert.AreEqual(voidTransaction.TransactionBreakdown.Count, transactionByUserSuppliedId.TransactionBreakdown.Count);
         }
 
         [TestMethod]

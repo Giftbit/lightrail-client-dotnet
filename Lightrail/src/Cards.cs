@@ -1,8 +1,8 @@
 using Lightrail.Model;
 using Lightrail.Params;
 using System;
-using System.Collections.Generic;
 using System.Net;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lightrail

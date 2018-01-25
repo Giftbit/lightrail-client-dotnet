@@ -128,18 +128,16 @@ namespace Lightrail.Net
             }
 
             var req = _requestUri.ToString();
-            bool firstParam = req.Contains("?");
             foreach (var parameter in parameters)
             {
                 var segment = $"{Uri.EscapeDataString(parameter.Key)}={Uri.EscapeDataString(parameter.Value)}";
-                if (firstParam)
+                if (!req.Contains("?"))
                 {
-                    req = $"{req}&{segment}";
-                    firstParam = false;
+                    req = $"{req}?{segment}";
                 }
                 else
                 {
-                    req = $"{req}?{segment}";
+                    req = $"{req}&{segment}";
                 }
             }
             _requestUri = new Uri(req, UriKind.Absolute);

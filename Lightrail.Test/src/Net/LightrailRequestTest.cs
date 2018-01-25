@@ -23,7 +23,7 @@ namespace Lightrail.Test.Net
             var req = lightrail.Request("GET", "/foo")
                 .AddQueryParameters(parms);
 
-            Assert.AreEqual(req.RequestUri.Query.ToString(), "?zero=0?one=1?bfalse=False?btrue=True?str=immastring");
+            Assert.AreEqual("?zero=0&one=1&bfalse=False&btrue=True&str=immastring", req.RequestUri.Query.ToString());
         }
     }
 }

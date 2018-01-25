@@ -39,35 +39,35 @@ namespace Lightrail.Test
             });
             Assert.IsNotNull(contact);
             Assert.IsNotNull(contact.ContactId);
-            Assert.AreEqual(contact.UserSuppliedId, userSuppliedId);
-            Assert.AreEqual(contact.Email, "jammy@wammy.com");
-            Assert.AreEqual(contact.FirstName, "Jamal");
-            Assert.AreEqual(contact.LastName, "Marais");
+            Assert.AreEqual(userSuppliedId, contact.UserSuppliedId);
+            Assert.AreEqual("jammy@wammy.com", contact.Email);
+            Assert.AreEqual("Jamal", contact.FirstName);
+            Assert.AreEqual("Marais", contact.LastName);
 
             var contactById = await _lightrail.Contacts.GetContactById(contact.ContactId);
             Assert.IsNotNull(contactById);
-            Assert.AreEqual(contactById.ContactId, contact.ContactId);
-            Assert.AreEqual(contactById.UserSuppliedId, contact.UserSuppliedId);
-            Assert.AreEqual(contactById.Email, contact.Email);
-            Assert.AreEqual(contactById.FirstName, contact.FirstName);
-            Assert.AreEqual(contactById.LastName, contact.LastName);
+            Assert.AreEqual(contact.ContactId, contactById.ContactId);
+            Assert.AreEqual(contact.UserSuppliedId, contactById.UserSuppliedId);
+            Assert.AreEqual(contact.Email, contactById.Email);
+            Assert.AreEqual(contact.FirstName, contactById.FirstName);
+            Assert.AreEqual(contact.LastName, contactById.LastName);
 
             // Jamal is a progressive kind of guy and took his wife's last name.
             var updatedContact = await _lightrail.Contacts.UpdateContact(contactById.ContactId, new UpdateContactParams { LastName = "Coetzee" });
             Assert.IsNotNull(updatedContact);
-            Assert.AreEqual(updatedContact.ContactId, contact.ContactId);
-            Assert.AreEqual(updatedContact.UserSuppliedId, contact.UserSuppliedId);
-            Assert.AreEqual(updatedContact.Email, contact.Email);
-            Assert.AreEqual(updatedContact.FirstName, contact.FirstName);
-            Assert.AreEqual(updatedContact.LastName, "Coetzee");
+            Assert.AreEqual(contact.ContactId, updatedContact.ContactId);
+            Assert.AreEqual(contact.UserSuppliedId, updatedContact.UserSuppliedId);
+            Assert.AreEqual(contact.Email, updatedContact.Email);
+            Assert.AreEqual(contact.FirstName, updatedContact.FirstName);
+            Assert.AreEqual("Coetzee", updatedContact.LastName);
 
             var contactByUserSuppliedId = await _lightrail.Contacts.GetContactByUserSuppliedId(userSuppliedId);
             Assert.IsNotNull(contactByUserSuppliedId);
-            Assert.AreEqual(contactByUserSuppliedId.ContactId, updatedContact.ContactId);
-            Assert.AreEqual(contactByUserSuppliedId.UserSuppliedId, updatedContact.UserSuppliedId);
-            Assert.AreEqual(contactByUserSuppliedId.Email, updatedContact.Email);
-            Assert.AreEqual(contactByUserSuppliedId.FirstName, updatedContact.FirstName);
-            Assert.AreEqual(contactByUserSuppliedId.LastName, updatedContact.LastName);
+            Assert.AreEqual(updatedContact.ContactId, contactByUserSuppliedId.ContactId);
+            Assert.AreEqual(updatedContact.UserSuppliedId, contactByUserSuppliedId.UserSuppliedId);
+            Assert.AreEqual(updatedContact.Email, contactByUserSuppliedId.Email);
+            Assert.AreEqual(updatedContact.FirstName, contactByUserSuppliedId.FirstName);
+            Assert.AreEqual(updatedContact.LastName, contactByUserSuppliedId.LastName);
         }
 
         [TestMethod]

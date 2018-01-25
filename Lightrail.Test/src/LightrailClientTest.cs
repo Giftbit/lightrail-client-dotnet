@@ -23,16 +23,16 @@ namespace Lightrail.Test
 
             var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { ContactId = "chauntaktEyeDee" }, 600);
             Assert.IsNotNull(shopperToken);
-            Assert.AreEqual(shopperToken.Split(".").Length, 3);
+            Assert.AreEqual(3, shopperToken.Split(".").Length);
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
-            Assert.AreEqual(jwt.Header.Alg, "HS256");
-            Assert.AreEqual(jwt.Header["ver"], (Int64)3);
-            Assert.AreEqual(jwt.Header["vav"], (Int64)1);
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gui"], "gooey");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gmi"], "germie");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["coi"], "chauntaktEyeDee");
-            Assert.AreEqual(jwt.Payload.Iss, "MERCHANT");
+            Assert.AreEqual("HS256", jwt.Header.Alg);
+            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
+            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
+            Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
+            Assert.AreEqual("chauntaktEyeDee", ((JObject)jwt.Payload["g"])["coi"]);
+            Assert.AreEqual("MERCHANT", jwt.Payload.Iss);
             Assert.IsNotNull(jwt.Payload.Iat);
             Assert.IsNotNull(jwt.Payload.Exp);
         }
@@ -48,16 +48,16 @@ namespace Lightrail.Test
 
             var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { ShopperId = "zhopherId" }, 600);
             Assert.IsNotNull(shopperToken);
-            Assert.AreEqual(shopperToken.Split(".").Length, 3);
+            Assert.AreEqual(3, shopperToken.Split(".").Length);
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
-            Assert.AreEqual(jwt.Header.Alg, "HS256");
-            Assert.AreEqual(jwt.Header["ver"], (Int64)3);
-            Assert.AreEqual(jwt.Header["vav"], (Int64)1);
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gui"], "gooey");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gmi"], "germie");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["shi"], "zhopherId");
-            Assert.AreEqual(jwt.Payload.Iss, "MERCHANT");
+            Assert.AreEqual("HS256", jwt.Header.Alg);
+            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
+            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
+            Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
+            Assert.AreEqual("zhopherId", ((JObject)jwt.Payload["g"])["shi"]);
+            Assert.AreEqual("MERCHANT", jwt.Payload.Iss);
             Assert.IsNotNull(jwt.Payload.Iat);
             Assert.IsNotNull(jwt.Payload.Exp);
         }
@@ -73,16 +73,16 @@ namespace Lightrail.Test
 
             var shopperToken = lightrail.GenerateShopperToken(new ContactIdentifier { UserSuppliedId = "luserSuppliedId" }, 600);
             Assert.IsNotNull(shopperToken);
-            Assert.AreEqual(shopperToken.Split(".").Length, 3);
+            Assert.AreEqual(3, shopperToken.Split(".").Length);
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
-            Assert.AreEqual(jwt.Header.Alg, "HS256");
-            Assert.AreEqual(jwt.Header["ver"], (Int64)3);
-            Assert.AreEqual(jwt.Header["vav"], (Int64)1);
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gui"], "gooey");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["gmi"], "germie");
-            Assert.AreEqual(((JObject)jwt.Payload["g"])["cui"], "luserSuppliedId");
-            Assert.AreEqual(jwt.Payload.Iss, "MERCHANT");
+            Assert.AreEqual("HS256", jwt.Header.Alg);
+            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
+            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
+            Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
+            Assert.AreEqual("luserSuppliedId", ((JObject)jwt.Payload["g"])["cui"]);
+            Assert.AreEqual("MERCHANT", jwt.Payload.Iss);
             Assert.IsNotNull(jwt.Payload.Iat);
             Assert.IsNotNull(jwt.Payload.Exp);
         }
