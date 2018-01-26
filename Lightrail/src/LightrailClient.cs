@@ -1,4 +1,5 @@
 using Lightrail.Net;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
 using System;
@@ -21,31 +22,53 @@ namespace Lightrail
         private Cards _cards;
         private Contacts _contacts;
 
+        /// The Lightrail API key as retrieved from the web app.
         public string ApiKey { get; set; }
+
+        /// The shared secret as available from web app.
         public string SharedSecret { get; set; }
+
+        /// The REST root URL.  Usually this is only set for testing.
         public Uri RestRoot { get; set; } = new Uri("https://api.lightrail.com");
+
+        /// An ILogger to log all requests with.
+        public ILogger Logger { get; set; }
+
+        /// Optional parameter that can be used to set additional headers in requests to Lightrail.
         public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
 
+        /// Accounts operations.
         public Accounts Accounts => _accounts != null ? _accounts : _accounts = new Accounts(this);
+
+        /// Cards operations.
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
+
+        /// Contacts operations.
         public Contacts Contacts => _contacts != null ? _contacts : _contacts = new Contacts(this);
 
+        /// Initiate a new request to the Lightrail server.
         public LightrailRequest Request(string method, string path)
         {
             return Request(new HttpMethod(method), path);
         }
 
+        /// Initiate a new request to the Lightrail server.
         public LightrailRequest Request(HttpMethod method, string path)
         {
             Uri requestUri = new Uri(RestRoot, path);
 
-            return new LightrailRequest(_httpClient, method, requestUri)
+            return new LightrailRequest(_httpClient, method, requestUri, Logger)
                 .AddHeader("Accept", "application/json")
                 .AddHeader("Authorization", $"Bearer {ApiKey}")
                 .AddHeader("User-Agent", _userAgent)
                 .AddHeaders(_additionalHeaders);
         }
 
+        /// Generate a shopper token that can be used to make Lightrail calls
+        /// restricted to that particular shopper.  The shopper can be defined by the
+        /// contactId, userSuppliedId, or shopperId.
+        ///
+        /// eg: `generateShopperToken({shopperId: "user-12345"});`
         public string GenerateShopperToken(Model.ContactIdentifier contact, int validityInSeconds = 43200)
         {
             if (ApiKey == null)

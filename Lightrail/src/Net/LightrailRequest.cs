@@ -1,9 +1,11 @@
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -23,10 +25,11 @@ namespace Lightrail.Net
         private HttpClient _httpClient;
         private HttpMethod _method;
         private Uri _requestUri;
+        private ILogger _logger;
         private List<KeyValuePair<string, string>> _headers = new List<KeyValuePair<string, string>>();
         private string _body;
 
-        public LightrailRequest(HttpClient httpClient, HttpMethod method, Uri requestUri)
+        public LightrailRequest(HttpClient httpClient, HttpMethod method, Uri requestUri, ILogger logger = null)
         {
             if (httpClient == null)
             {
@@ -43,6 +46,7 @@ namespace Lightrail.Net
             _httpClient = httpClient;
             _method = method;
             _requestUri = requestUri;
+            _logger = logger;
         }
 
         public HttpMethod Method => _method;
@@ -156,6 +160,7 @@ namespace Lightrail.Net
 
         public async Task<LightrailResponse<T>> Execute<T>()
         {
+
             var reqMessage = new HttpRequestMessage(_method, _requestUri);
             if (_body != null)
             {
@@ -166,7 +171,10 @@ namespace Lightrail.Net
                 reqMessage.Headers.Add(kvp.Key, kvp.Value);
             }
 
+            var stopwatch = Stopwatch.StartNew();
             var respMessage = await _httpClient.SendAsync(reqMessage);
+            stopwatch.Stop();
+            _logger?.LogInformation("{0,-6} {1} {2} ({3}ms)", new object[] {_method, (int)respMessage.StatusCode, _requestUri, stopwatch.ElapsedMilliseconds});
             return new LightrailResponse<T>
             {
                 Method = _method,

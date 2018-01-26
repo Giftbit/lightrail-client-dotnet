@@ -17,6 +17,7 @@ namespace Lightrail
             _lightrail = lightrail;
         }
 
+        /// Transaction operations by card.
         public CardTransactions Transactions => _cardTransactions != null ? _cardTransactions : _cardTransactions = new CardTransactions(_lightrail);
 
         public async Task<Card> CreateCard(CreateCardParams parms)

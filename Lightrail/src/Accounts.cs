@@ -16,6 +16,8 @@ namespace Lightrail
             _lightrail = lightrail;
         }
 
+        /// Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
+        /// but throws error if contactId provided and contact not found (can't create a contact 'by contactId')
         public async Task<Card> CreateAccount(ContactIdentifier ci, CreateAccountCardParams parms)
         {
             if (ci == null)
