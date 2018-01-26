@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Lightrail.Net
 {
+    /// <summary>
+    /// A request to the Lightrail server.  Execute with <see cref="LightrailRequest.Execute()"/>.
+    /// </summary>
     public class LightrailRequest
     {
         private static readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings

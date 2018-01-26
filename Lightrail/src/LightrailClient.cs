@@ -13,6 +13,15 @@ using System.Threading.Tasks;
 
 namespace Lightrail
 {
+    /// <summary>
+    /// The root of all operations on the Lightrail server.  Remember to set the ApiKey.
+    /// </summary>
+    /// <remarks>
+    /// Don't store keys in your code base, inject them through environment variables.
+    /// </remarks>
+    /// <example>
+    /// var lightrail = new LightrailClient { ApiKey = Environment.GetEnvironmentVariable("LIGHTRAIL_API_KEY") };
+    /// <example>
     public class LightrailClient
     {
         private IList<KeyValuePair<string, string>> _additionalHeaders = new List<KeyValuePair<string, string>>();
@@ -22,37 +31,57 @@ namespace Lightrail
         private Cards _cards;
         private Contacts _contacts;
 
+        /// <summary>
         /// The Lightrail API key as retrieved from the web app.
+        /// </summary>
         public string ApiKey { get; set; }
 
+        /// <summary>
         /// The shared secret as available from web app.
+        /// </summary>
         public string SharedSecret { get; set; }
 
+        /// <summary>
         /// The REST root URL.  Usually this is only set for testing.
+        /// </summary>
         public Uri RestRoot { get; set; } = new Uri("https://api.lightrail.com");
 
+        /// <summary>
         /// An ILogger to log all requests with.
+        /// </summary>
         public ILogger Logger { get; set; }
 
+        /// <summary>
         /// Optional parameter that can be used to set additional headers in requests to Lightrail.
+        /// </summary>
         public IList<KeyValuePair<string, string>> AdditionalHeaders => _additionalHeaders;
 
+        /// <summary>
         /// Accounts operations.
+        /// </summary>
         public Accounts Accounts => _accounts != null ? _accounts : _accounts = new Accounts(this);
 
+        /// <summary>
         /// Cards operations.
+        /// </summary>
         public Cards Cards => _cards != null ? _cards : _cards = new Cards(this);
 
+        /// <summary>
         /// Contacts operations.
+        /// </summary>
         public Contacts Contacts => _contacts != null ? _contacts : _contacts = new Contacts(this);
 
+        /// <summary>
         /// Initiate a new request to the Lightrail server.
+        /// </summary>
         public LightrailRequest Request(string method, string path)
         {
             return Request(new HttpMethod(method), path);
         }
 
+        /// <summary>
         /// Initiate a new request to the Lightrail server.
+        /// </summary>
         public LightrailRequest Request(HttpMethod method, string path)
         {
             Uri requestUri = new Uri(RestRoot, path);
@@ -64,11 +93,14 @@ namespace Lightrail
                 .AddHeaders(_additionalHeaders);
         }
 
+        /// <summary>
         /// Generate a shopper token that can be used to make Lightrail calls
         /// restricted to that particular shopper.  The shopper can be defined by the
         /// contactId, userSuppliedId, or shopperId.
-        ///
-        /// eg: `generateShopperToken({shopperId: "user-12345"});`
+        /// </summary>
+        /// <example>
+        /// eg: `GenerateShopperToken(new ContactIdentifier {ShopperId: "user-12345"});`
+        /// </example>
         public string GenerateShopperToken(Model.ContactIdentifier contact, int validityInSeconds = 43200)
         {
             if (ApiKey == null)
