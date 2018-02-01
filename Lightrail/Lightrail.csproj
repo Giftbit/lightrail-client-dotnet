@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageVersion>0.0.1</PackageVersion>
+    <PackageId>Lightrail</PackageId>
+    <Authors>Lightrail</Authors>
+    <Description>A .NET client for Lightrail.</Description>
+    <PackageLicenseUrl>https://github.com/Giftbit/lightrail-client-dotnet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Giftbit/lightrail-client-dotnet</PackageProjectUrl>
+    <PackageTags>lightrail;currency</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
