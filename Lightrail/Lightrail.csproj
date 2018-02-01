@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageVersion>0.0.1</PackageVersion>
-    <PackageId>Lightrail</PackageId>
+    <PackageId>Lightrail-Client</PackageId>
     <Authors>Lightrail</Authors>
     <Description>A .NET client for Lightrail.</Description>
     <PackageLicenseUrl>https://github.com/Giftbit/lightrail-client-dotnet/blob/master/LICENSE</PackageLicenseUrl>
@@ -12,7 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetEnv" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.1.5" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
