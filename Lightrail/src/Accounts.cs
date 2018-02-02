@@ -16,10 +16,10 @@ namespace Lightrail
             _lightrail = lightrail;
         }
 
-        /// <Summary>
+        /// <summary>
         /// Creates a contact first if contact doesn't exist (if userSuppliedId or shopperId provided)
         /// but throws error if contactId provided and contact not found (can't create a contact 'by contactId').
-        /// </Summary>
+        /// </summary>
         public async Task<Card> CreateAccount(ContactIdentifier ci, CreateAccountCardParams parms)
         {
             if (ci == null)
@@ -64,9 +64,9 @@ namespace Lightrail
             return card;
         }
 
-        /// <Summary>
+        /// <summary>
         /// Get a Card by ContactIdentifier and currency.  Returns null if it doesn't not exist.
-        /// </Summary>
+        /// </summary>
         public async Task<Card> GetAccount(ContactIdentifier ci, string currency)
         {
             if (ci == null)

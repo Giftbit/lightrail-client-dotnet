@@ -1,3 +1,5 @@
+using System;
+
 namespace Lightrail.Model
 {
     public class ContactIdentifier
