@@ -7,7 +7,7 @@ namespace Lightrail.Model
     public class Transaction
     {
         public string TransactionId { get; set; }
-        public Int64 Value { get; set; }
+        public long Value { get; set; }
         public string UserSuppliedId { get; set; }
         public DateTime? DateCreated { get; set; }
         public TransactionType TransactionType { get; set; }

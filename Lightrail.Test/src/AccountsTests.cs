@@ -43,6 +43,13 @@ namespace Lightrail.Test
             Assert.AreEqual(CardType.ACCOUNT_CARD, card.CardType);
             Assert.AreEqual("USD", card.Currency);
 
+            var cardByGet = await _lightrail.Accounts.GetAccount(shopper, "USD");
+            Assert.IsNotNull(cardByGet);
+            Assert.AreEqual(card.CardId, cardByGet.CardId);
+            Assert.AreEqual(card.UserSuppliedId, cardByGet.UserSuppliedId);
+            Assert.AreEqual(card.CardType, cardByGet.CardType);
+            Assert.AreEqual(card.Currency, cardByGet.Currency);
+
             var contact = await _lightrail.Contacts.GetContact(shopper);
             Assert.IsNotNull(contact);
             Assert.AreEqual(card.ContactId, contact.ContactId);
@@ -71,6 +78,14 @@ namespace Lightrail.Test
             Assert.AreEqual(1, captureTransaction.TransactionBreakdown.Count);
             Assert.AreEqual(-5191, captureTransaction.TransactionBreakdown[0].Value);
             Assert.AreEqual(4000, captureTransaction.TransactionBreakdown[0].ValueAvailableAfterTransaction);
+        }
+
+        [TestMethod]
+        public async Task TestGetNonExistantAccount()
+        {
+            var shopper = new ContactIdentifier { ShopperId = Guid.NewGuid().ToString() };
+            var card = await _lightrail.Accounts.GetAccount(shopper, "AUD");
+            Assert.IsNull(card);
         }
     }
 }

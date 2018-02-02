@@ -16,7 +16,7 @@ namespace Lightrail.Model
     public class ValueStoreDetails
     {
         public ValueStoreType ValueStoreType { get; set; }
-        public Int64 Value { get; set; }
+        public long Value { get; set; }
         public BalanceState State { get; set; }
         public DateTime? Expires { get; set; }
         public DateTime? StartDate { get; set; }

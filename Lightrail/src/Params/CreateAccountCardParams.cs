@@ -8,7 +8,7 @@ namespace Lightrail.Params
     {
         public string UserSuppliedId { get; set; }
         public string Currency { get; set; }
-        public Int64 InitialValue { get; set; }
+        public long InitialValue { get; set; }
         public IDictionary<string, string> Categories { get; set; }
         public string ContactId { get; set; }
         public DateTime? Expires { get; set; }

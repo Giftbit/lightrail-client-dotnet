@@ -6,8 +6,8 @@ namespace Lightrail.Model
 {
     public class TransactionBreakdown
     {
-        public Int64 Value { get; set;}
-        public Int64 ValueAvailableAfterTransaction { get; set;}
+        public long Value { get; set;}
+        public long ValueAvailableAfterTransaction { get; set;}
         public string ValueStoreId { get; set;}
     }
 }

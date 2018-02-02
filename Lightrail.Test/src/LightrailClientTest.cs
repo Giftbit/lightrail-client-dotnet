@@ -27,8 +27,8 @@ namespace Lightrail.Test
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual("HS256", jwt.Header.Alg);
-            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
-            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual(3L, jwt.Header["ver"]);
+            Assert.AreEqual(1L, jwt.Header["vav"]);
             Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
             Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
             Assert.AreEqual("chauntaktEyeDee", ((JObject)jwt.Payload["g"])["coi"]);
@@ -52,8 +52,8 @@ namespace Lightrail.Test
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual("HS256", jwt.Header.Alg);
-            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
-            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual(3L, jwt.Header["ver"]);
+            Assert.AreEqual(1L, jwt.Header["vav"]);
             Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
             Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
             Assert.AreEqual("zhopherId", ((JObject)jwt.Payload["g"])["shi"]);
@@ -77,8 +77,8 @@ namespace Lightrail.Test
 
             JwtSecurityToken jwt = ReadToken(shopperToken, lightrail.SharedSecret);
             Assert.AreEqual("HS256", jwt.Header.Alg);
-            Assert.AreEqual((Int64)3, jwt.Header["ver"]);
-            Assert.AreEqual((Int64)1, jwt.Header["vav"]);
+            Assert.AreEqual(3L, jwt.Header["ver"]);
+            Assert.AreEqual(1L, jwt.Header["vav"]);
             Assert.AreEqual("gooey", ((JObject)jwt.Payload["g"])["gui"]);
             Assert.AreEqual("germie", ((JObject)jwt.Payload["g"])["gmi"]);
             Assert.AreEqual("luserSuppliedId", ((JObject)jwt.Payload["g"])["cui"]);

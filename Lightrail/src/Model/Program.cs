@@ -14,10 +14,10 @@ namespace Lightrail.Model
         public DateTime DateCreated { get; set; }
         public DateTime? ProgramExpiresDate { get; set; }
         public DateTime? ProgramStartDate { get; set; }
-        public Int64? CodeActivePeriodInDays { get; set; }
-        public Int64? CodeValueMin { get; set; }
-        public Int64? CodeValueMax { get; set; }
-        public IList<Int64> FixedCodeValues { get; set; }
+        public long? CodeActivePeriodInDays { get; set; }
+        public long? CodeValueMin { get; set; }
+        public long? CodeValueMax { get; set; }
+        public IList<long> FixedCodeValues { get; set; }
         public CodeEngine CodeEngine { get; set; }
         public CodeConfig CodeConfig { get; set; }
         public ValueStoreType ValueStoreType { get; set; }
