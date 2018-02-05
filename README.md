@@ -10,12 +10,19 @@ A .NET client for Lightrail
 ### Compiling
 `dotnet build`
 
-### Testing
-Run unit tests with: `dotnet test`.
+### Unit Testing
+- `dotnet test`
 
-Create a test nuget package with `dotnet pack -c Debug`, add to local repo `nuget add Lightrail/bin/Debug/Lightrail-Client.<version>.nupkg -source ~/nuget-packages`, use in child project with `dotnet add package Lightrail-Client --version <version> -s ~/nuget-packages`.
+### Building Test Packages
+- (once) install [nuget](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#cli-tools)
+- (once) create a local dir to store packages: `mkdir ~/nuget-packages`
+- bump the version number in `Lightrail/Lightrail.csproj`
+- create a test nuget package: `dotnet pack -c Debug`
+- add the package to a local dir `nuget add Lightrail/bin/Debug/Lightrail-Client.<version>.nupkg -source ~/nuget-packages`
+- (optional) if replacing a package with the same version number clear the local cache `nuget locals all -clear`
+- use the package in the child project `dotnet add package Lightrail-Client --version <version> -s ~/nuget-packages`
 
 ### Releasing
-- bump the PackageVersion appropriately in `Lightrail.csproj`
+- bump the PackageVersion appropriately in `Lightrail/Lightrail.csproj`
 - create the nuget package with `dotnet pack -c Release`
 - upload to nuget.org as per https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package

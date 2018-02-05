@@ -34,6 +34,7 @@ namespace Lightrail
             {
                 throw new ArgumentException("parms.Currency is required");
             }
+            parms.EnsureUserSuppliedId();
 
             var contactId = await GetContactId(ci);
             if (contactId == null)
@@ -52,13 +53,20 @@ namespace Lightrail
             var card = await GetCard(contactId, parms.Currency);
             if (card == null)
             {
-                if (parms.ContactId != null && parms.ContactId != contactId)
+                card = await _lightrail.Cards.CreateCard(new CreateCardParams
                 {
-                    throw new ArgumentException("you've specified both a contactId and a shopperId for this account, but the contact with that contactId has a different shopperId");
-                }
-                var createCardParams = (CreateCardParams)parms;
-                createCardParams.ContactId = contactId;
-                card = await _lightrail.Cards.CreateCard(createCardParams);
+                    UserSuppliedId = parms.UserSuppliedId,
+                    ContactId = contactId,
+                    Currency = parms.Currency,
+                    InitialValue = parms.InitialValue,
+                    Categories = parms.Categories,
+                    Expires = parms.Expires,
+                    StartDate = parms.StartDate,
+                    Inactive = parms.Inactive,
+                    Metadata = parms.Metadata,
+                    ProgramId = parms.ProgramId,
+                    CardType = CardType.ACCOUNT_CARD
+                });
             }
 
             return card;
