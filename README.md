@@ -11,7 +11,7 @@ A .NET client for Lightrail
 `dotnet build`
 
 ### Unit Testing
-- `dotnet test`
+`dotnet test`
 
 ### Building Test Packages
 - (once) install [nuget](https://docs.microsoft.com/en-us/nuget/install-nuget-client-tools#cli-tools)
