@@ -8,6 +8,7 @@
     <Description>A .NET client for Lightrail.</Description>
     <PackageLicenseUrl>https://github.com/Giftbit/lightrail-client-dotnet/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Giftbit/lightrail-client-dotnet</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/Giftbit/lightrail-client-dotnet/master/Lightrail/rsc/PackageIcon64x64.png</PackageIconUrl>
     <PackageTags>lightrail;currency</PackageTags>
   </PropertyGroup>
 
