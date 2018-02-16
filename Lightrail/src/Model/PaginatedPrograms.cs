@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Lightrail.Model
 {
-    public class PaginatedCards : IPaginated
+    public class PaginatedPrograms : IPaginated
     {
-        public IList<Card> Cards { get; set; }
+        public IList<Program> Programs { get; set; }
         public Pagination Pagination { get; set; }
     }
 }

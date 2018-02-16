@@ -1,5 +1,5 @@
-# lightrail-client-dotnet
-A .NET client for Lightrail
+# Lightrail Client for .NET
+Lightrail is a modern platform for digital account credits, gift cards, promotions, and points (to learn more, visit [Lightrail](https://www.lightrail.com/)). This is a basic library for developers to easily connect with the Lightrail API using the .NET platform. If you are looking for specific use cases or other languages, check out the complete list of all [Lightrail libraries and integrations](https://github.com/Giftbit/Lightrail-API-Docs/blob/master/README.md#lightrail-integrations).
 
 ## Development
 
@@ -24,7 +24,11 @@ A .NET client for Lightrail
 
 ### Releasing
 - bump the PackageVersion appropriately in `Lightrail/Lightrail.csproj`
+- run the unit tests
 - create the nuget package with `dotnet pack -c Release`
 - generate and copy a [nuget api key](https://www.nuget.org/account/ApiKeys)
+    - expiry `1 day`
+    - `Push new packages and package versions`
+    - Glob Pattern `*`
 - publish to nuget `dotnet nuget push Lightrail/bin/Release/Lightrail-Client.<version>.nupkg -s https://api.nuget.org/v3/index.json -k <apikey>`
 - delete the [nuget api key](https://www.nuget.org/account/ApiKeys)

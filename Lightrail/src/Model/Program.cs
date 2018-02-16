@@ -19,22 +19,16 @@ namespace Lightrail.Model
         public long? CodeValueMax { get; set; }
         public IList<long> FixedCodeValues { get; set; }
         public CodeEngine CodeEngine { get; set; }
-        public CodeConfig CodeConfig { get; set; }
+        public string CodeConfig { get; set; }
         public ValueStoreType ValueStoreType { get; set; }
         public IDictionary<string, object> Metadata { get; set; }
         public string TimeZone { get; set; }
-        public CardType CardType { get; set; }
+        public CardType? CardType { get; set; }
     }
 
     public enum CodeEngine
     {
         [EnumMember(Value = "SIMPLE_STORED_VALUE")]
         SIMPLE_STORED_VALUE
-    }
-
-    public enum CodeConfig
-    {
-        [EnumMember(Value = "DEFAULT")]
-        DEFAULT
     }
 }

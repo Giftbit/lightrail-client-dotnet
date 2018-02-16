@@ -28,18 +28,31 @@ namespace Lightrail.Test
         [TestMethod]
         public async Task TestCreateAndGetGiftCard()
         {
-            var userSuppliedId = Guid.NewGuid().ToString();
+            var program = await _lightrail.Programs.CreateProgram(new CreateProgramParams
+            {
+                UserSuppliedId = Guid.NewGuid().ToString(),
+                Name = ".net cards unit test",
+                Currency = "USD",
+                CodeMinValue = 1,
+                CodeMaxValue = 10000,
+                ValueStoreType = ValueStoreType.PRINCIPAL,
+                ProgramStartDate = new DateTime(0)
+            });
+            Assert.IsNotNull(program);
+            Assert.IsNotNull(program.ProgramId);
 
+            var cardUserSuppliedId = Guid.NewGuid().ToString();
             var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
-                UserSuppliedId = userSuppliedId,
+                UserSuppliedId = cardUserSuppliedId,
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
-                InitialValue = 6565
+                InitialValue = 6565,
+                ProgramId = program.ProgramId
             });
             Assert.IsNotNull(card);
             Assert.IsNotNull(card.CardId);
-            Assert.AreEqual(userSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(cardUserSuppliedId, card.UserSuppliedId);
             Assert.AreEqual(CardType.GIFT_CARD, card.CardType);
             Assert.AreEqual("USD", card.Currency);
 
@@ -50,7 +63,7 @@ namespace Lightrail.Test
             Assert.AreEqual(card.CardType, cardById.CardType);
             Assert.AreEqual(card.Currency, cardById.Currency);
 
-            var cardByUserSuppliedId = await _lightrail.Cards.GetCardByUserSuppliedId(userSuppliedId);
+            var cardByUserSuppliedId = await _lightrail.Cards.GetCardByUserSuppliedId(cardUserSuppliedId);
             Assert.IsNotNull(cardByUserSuppliedId);
             Assert.AreEqual(card.CardId, cardByUserSuppliedId.CardId);
             Assert.AreEqual(card.UserSuppliedId, cardByUserSuppliedId.UserSuppliedId);
@@ -72,19 +85,32 @@ namespace Lightrail.Test
         [TestMethod]
         public async Task TestCreateAndActivateGiftCard()
         {
-            var userSuppliedId = Guid.NewGuid().ToString();
+            var program = await _lightrail.Programs.CreateProgram(new CreateProgramParams
+            {
+                UserSuppliedId = Guid.NewGuid().ToString(),
+                Name = ".net cards unit test",
+                Currency = "USD",
+                CodeMinValue = 1,
+                CodeMaxValue = 10000,
+                ValueStoreType = ValueStoreType.PRINCIPAL,
+                ProgramStartDate = new DateTime(0)
+            });
+            Assert.IsNotNull(program);
+            Assert.IsNotNull(program.ProgramId);
 
+            var cardUserSuppliedId = Guid.NewGuid().ToString();
             var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
-                UserSuppliedId = userSuppliedId,
+                UserSuppliedId = cardUserSuppliedId,
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
                 InitialValue = 7272,
-                Inactive = true
+                Inactive = true,
+                ProgramId = program.ProgramId
             });
             Assert.IsNotNull(card);
             Assert.IsNotNull(card.CardId);
-            Assert.AreEqual(userSuppliedId, card.UserSuppliedId);
+            Assert.AreEqual(cardUserSuppliedId, card.UserSuppliedId);
             Assert.AreEqual(CardType.GIFT_CARD, card.CardType);
             Assert.AreEqual("USD", card.Currency);
 

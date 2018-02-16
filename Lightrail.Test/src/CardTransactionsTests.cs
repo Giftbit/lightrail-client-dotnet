@@ -28,12 +28,26 @@ namespace Lightrail.Test
         [TestMethod]
         public async Task TestSimulateTransaction()
         {
+            var program = await _lightrail.Programs.CreateProgram(new CreateProgramParams
+            {
+                UserSuppliedId = Guid.NewGuid().ToString(),
+                Name = ".net cards unit test",
+                Currency = "USD",
+                CodeMinValue = 1,
+                CodeMaxValue = 10000,
+                ValueStoreType = ValueStoreType.PRINCIPAL,
+                ProgramStartDate = new DateTime(0)
+            });
+            Assert.IsNotNull(program);
+            Assert.IsNotNull(program.ProgramId);
+
             var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
                 UserSuppliedId = Guid.NewGuid().ToString(),
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
-                InitialValue = 7474
+                InitialValue = 7474,
+                ProgramId = program.ProgramId
             });
             Assert.IsNotNull(card);
 
@@ -54,12 +68,26 @@ namespace Lightrail.Test
         [TestMethod]
         public async Task TestCapturePendingTransaction()
         {
+            var program = await _lightrail.Programs.CreateProgram(new CreateProgramParams
+            {
+                UserSuppliedId = Guid.NewGuid().ToString(),
+                Name = ".net cards unit test",
+                Currency = "USD",
+                CodeMinValue = 1,
+                CodeMaxValue = 10000,
+                ValueStoreType = ValueStoreType.PRINCIPAL,
+                ProgramStartDate = new DateTime(0)
+            });
+            Assert.IsNotNull(program);
+            Assert.IsNotNull(program.ProgramId);
+
             var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
                 UserSuppliedId = Guid.NewGuid().ToString(),
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
-                InitialValue = 123321
+                InitialValue = 123321,
+                ProgramId = program.ProgramId
             });
             Assert.IsNotNull(card);
 
@@ -99,12 +127,26 @@ namespace Lightrail.Test
         [TestMethod]
         public async Task TestVoidPendingTransaction()
         {
+            var program = await _lightrail.Programs.CreateProgram(new CreateProgramParams
+            {
+                UserSuppliedId = Guid.NewGuid().ToString(),
+                Name = ".net cards unit test",
+                Currency = "USD",
+                CodeMinValue = 1,
+                CodeMaxValue = 10000,
+                ValueStoreType = ValueStoreType.PRINCIPAL,
+                ProgramStartDate = new DateTime(0)
+            });
+            Assert.IsNotNull(program);
+            Assert.IsNotNull(program.ProgramId);
+
             var card = await _lightrail.Cards.CreateCard(new CreateCardParams
             {
                 UserSuppliedId = Guid.NewGuid().ToString(),
                 CardType = CardType.GIFT_CARD,
                 Currency = "USD",
-                InitialValue = 123321
+                InitialValue = 123321,
+                ProgramId = program.ProgramId
             });
             Assert.IsNotNull(card);
 

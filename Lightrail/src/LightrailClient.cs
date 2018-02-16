@@ -30,6 +30,7 @@ namespace Lightrail
         private Accounts _accounts;
         private Cards _cards;
         private Contacts _contacts;
+        private Programs _programs;
 
         /// <summary>
         /// The Lightrail API key as retrieved from the web app.
@@ -49,6 +50,12 @@ namespace Lightrail
         /// <summary>
         /// An ILogger to log all requests with.
         /// </summary>
+        /// <remarks>
+        /// Console logging can easily be provided using the Microsoft.Extensions.Logging.Console nuget package.
+        /// </remarks>
+        /// <example>
+        /// Logger = new Microsoft.Extensions.Logging.LoggerFactory().AddConsole().CreateLogger("Lightrail")
+        /// </example>
         public ILogger Logger { get; set; }
 
         /// <summary>
@@ -70,6 +77,11 @@ namespace Lightrail
         /// Contacts operations.
         /// </summary>
         public Contacts Contacts => _contacts != null ? _contacts : _contacts = new Contacts(this);
+
+        /// <summary>
+        /// Programs operations.
+        /// </summary>
+        public Programs Programs => _programs != null ? _programs : _programs = new Programs(this);
 
         /// <summary>
         /// Initiate a new request to the Lightrail server.
