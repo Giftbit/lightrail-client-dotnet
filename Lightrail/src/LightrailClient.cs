@@ -115,6 +115,19 @@ namespace Lightrail
         /// </example>
         public string GenerateShopperToken(Model.ContactIdentifier contact, int validityInSeconds = 43200)
         {
+            return GenerateShopperToken(contact, new GenerateShopperTokenOptions { ValidityInSeconds = validityInSeconds });
+        }
+
+        /// <summary>
+        /// Generate a shopper token that can be used to make Lightrail calls
+        /// restricted to that particular shopper.  The shopper can be defined by the
+        /// contactId, userSuppliedId, or shopperId.
+        /// </summary>
+        /// <example>
+        /// eg: `GenerateShopperToken(new ContactIdentifier {ShopperId: "user-12345"}, new GenerateShopperTokenOptions { });`
+        /// </example>
+        public string GenerateShopperToken(Model.ContactIdentifier contact, GenerateShopperTokenOptions options)
+        {
             if (ApiKey == null)
             {
                 throw new InvalidOperationException("ApiKey is not set.");
@@ -131,6 +144,8 @@ namespace Lightrail
             {
                 throw new ArgumentException(nameof(contact), "one of ContactId, ShopperId or UserSupliedId must be set");
             }
+
+            int validityInSeconds = options.ValidityInSeconds ?? 43200;
             if (validityInSeconds < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(validityInSeconds), "must be > 0");
@@ -174,10 +189,16 @@ namespace Lightrail
             var payload = new JwtPayload
             {
                 {"g", g},
+                {"scopes", new string[] {"shopper"}},
                 {"iss", "MERCHANT"},
                 {"iat", nowInSeconds},
                 {"exp", nowInSeconds + validityInSeconds}
             };
+
+            if (options.Metadata != null)
+            {
+                payload["metadata"] = options.Metadata;
+            }
 
             var secToken = new JwtSecurityToken(header, payload);
             return handler.WriteToken(secToken);
