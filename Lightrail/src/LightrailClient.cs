@@ -189,7 +189,7 @@ namespace Lightrail
             var payload = new JwtPayload
             {
                 {"g", g},
-                {"scopes", new string[] {"shopper"}},
+                {"roles", new string[] {"shopper"}},
                 {"iss", "MERCHANT"},
                 {"iat", nowInSeconds},
                 {"exp", nowInSeconds + validityInSeconds}
